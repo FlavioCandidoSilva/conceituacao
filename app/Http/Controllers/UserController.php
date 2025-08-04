@@ -22,7 +22,7 @@ class UserController extends Controller
         if (request()->ajax()) {
             $data = [];
             foreach ($users as $user) {
-                $roles = $user->roles->pluck('role')->toArray();
+                $rolesList = $user->roles->pluck('role')->toArray();
                 $rolesId = $user->roles->pluck('id')->first();
 
                 $canEdit = PermissionHelper::userCan('user.edit') || $currentUser->id === $user->id;
@@ -32,7 +32,7 @@ class UserController extends Controller
                     'id' => $user->id,
                     'name' => $user->name,
                     'email' => $user->email,
-                    'roles' => $roles,
+                    'roles' => $rolesList,
                     'roles_id' => $rolesId,
                     'can_edit' => $canEdit,
                     'can_delete' => $canDelete
